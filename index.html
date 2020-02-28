@@ -80,13 +80,23 @@
 
     var bigText = g.append('text')
         .classed('big-text', true)
-        .attr('x', 20)
+        .attr('x', 120)
         .attr('y', 45);
 
     var bigPopText = g.append('text')
         .classed('big-text', true)
         .attr('x', 20)
+        .attr('y', 120);
+
+    var bigSupText = g.append('text')
+        .classed('big-text', true)
+        .attr('x', 20)
         .attr('y', 80);
+
+    var bigCodeText = g.append('text')
+        .classed('big-text', true)
+        .attr('x', 20)
+        .attr('y', 45);
 
     // Load map data
     d3.json('data.geojson', function(error, mapData) {
@@ -116,6 +126,16 @@
     // Get province population
     function popFn(d){
         return d && d.properties ? d.properties.population_2014 : null;
+    }
+
+    // Get province size
+    function supFn(d){
+        return d && d.properties ? d.properties.superficie : null;
+    }
+
+    // Get province code
+    function codeFn(d){
+        return d && d.properties ? d.properties.INSEE_COM : null;
     }
 
     // Get province name length
@@ -214,6 +234,8 @@
     function textArt(data){
         let name = nameFn(data);
         let pop = popFn(data);
+        let sup = supFn(data);
+        let code = codeFn(data);
 
         // Use random font
         var fontIndex = Math.round(Math.random() * FONTS.length);
@@ -225,7 +247,15 @@
 
         bigPopText
             .style('font-family', fontFamily)
-            .text("population : "+pop);
+            .text("Population : "+pop);
+
+        bigSupText
+            .style('font-family', fontFamily)
+            .text("Superficie : "+sup);
+
+        bigCodeText
+            .style('font-family', fontFamily)
+            .text(code);
 
         var positions = [];
 
